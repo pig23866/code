@@ -12,9 +12,11 @@ int main() {
     int choice=-1;
     int total=0;
     cout << "1. Water 20" << endl;
-        cout << "2. Tea 30 " << endl;
-        cout << "3. Coffee 45" << endl;
-        cout << "0. 離開" << endl;
+    cout << "2. Tea 30 " << endl;
+    cout << "3. Coffee 45" << endl;
+    cout << "0. 離開" << endl;
+
+    
     while (choice != 0) {
         cout << "請選擇：";
         cin >> choice;
