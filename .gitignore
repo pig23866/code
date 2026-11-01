@@ -1,0 +1,9 @@
+# 編譯產生的二進位與可執行檔
+*.exe
+*.out
+*.o
+*.obj
+
+# Code Runner 產生的暫存檔
+tempCodeRunnerFile.cpp
+
