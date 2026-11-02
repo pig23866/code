@@ -3,7 +3,10 @@
 *.out
 *.o
 *.obj
+*.pdb
+*.ilk
+hello
 
-# Code Runner 產生的暫存檔
-tempCodeRunnerFile.cpp
-
+# Code Runner 產生的暫存檔與編輯器配置
+tempCodeRunnerFile*
+.vscode/
