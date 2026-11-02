@@ -1,15 +1,7 @@
 #include <iostream>
-#include <iomanip>
-#include <string>
-#include <windows.h>
-
 using namespace std;
 
 int main() {
-    // 設定為UTF-8編碼
-    SetConsoleOutputCP(65001);
-    SetConsoleCP(65001);
-
     // 陣列宣告：20 個座位，初始值皆為 0 (0: 空位, 1: 已售出)
     int seats[20] = {0};
 

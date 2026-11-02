@@ -1,14 +1,6 @@
 #include <iostream>
-#include <iomanip>
-#include <string>
-#include <windows.h>
-
 using namespace std;
 int main() {
-    // 設定為UTF-8編碼
-    SetConsoleOutputCP(65001);
-    SetConsoleCP(65001);
-
     // 陣列宣告：儲存星期一至星期日（共 7 天）的銷售量
     int sales[7];
 
