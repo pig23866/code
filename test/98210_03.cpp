@@ -1,9 +1,10 @@
 #include <iostream>
 using namespace std;
+
 int main() {
     int Temperature[7];
 
-    cout << "Imput Temperature" << endl;
+    cout << "Input Temperature" << endl;
     for (int i = 0; i < 7; i++) {
         cout << "Day " << (i + 1) << " Temperature: ";
         cin >> Temperature[i];
@@ -14,38 +15,31 @@ int main() {
         sum += Temperature[i];
     }
     double average = static_cast<double>(sum) / 7;
-    
-   
 
     int s = 0;
     for (int i = 0; i < 7; i++) {
-    if (Temperature[i] >= 35) {
-        s++;
+        if (Temperature[i] >= 35) {
+            s++;
         }
     }
-    
+
     int maxScore = Temperature[0];
     int minScore = Temperature[0];
+    int t = 1; // 記錄最熱的天數（預設為第 1 天）
+
     for (int i = 0; i < 7; i++) {
         if (Temperature[i] > maxScore) {
-          maxScore = Temperature[i];
+            maxScore = Temperature[i];
+            t = i + 1; // 轉為 1-based 的第幾天 (Day 1 ~ Day 7)
         }
         if (Temperature[i] < minScore) {
-        minScore = Temperature[i];
+            minScore = Temperature[i];
         }
     }
-    int t = 0;
-    for (int i = 0; i < 7; i++) {
-        if (Temperature[i] >= 35) {
-          t = i;
-        }
-    break;
-    }
-
 
     cout << "Average Temperature: " << average << " C" << endl;
-    cout << "Heigest Temperature: " << maxScore << " C" << endl;
-    cout << "Lowestest Temperature: " << minScore << " C" << endl;
+    cout << "Highest Temperature: " << maxScore << " C" << endl;
+    cout << "Lowest Temperature: " << minScore << " C" << endl;
     cout << "Hot day: " << s << endl;
     cout << "Hottest day: Day " << t << endl;
 
