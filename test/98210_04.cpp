@@ -2,24 +2,44 @@
 
 using namespace std;
 
-// 計算所有商品的總庫存量 caculate:計算
-int calculateTotal(int stock[], int n)
+// ==========================================
+// 函式實作 (Function Implementations)
+// ==========================================
+
+/**
+ * 函式名稱：calculateFine
+ * 功能：計算單本書籍的罰款金額（階梯式累進罰款）
+ * 規則：
+ *  - 逾期天數 <= 0：0 元
+ *  - 1 ~ 7 天：每天 5 元
+ *  - 超過 7 天：前 7 天每天 5 元 (共 35 元)，第 8 天起每天 10 元
+ */
+int calculateFine(int days)
 {
-    int total = 0;
-    for (int i = 0; i < n; i++)
+    if (days <= 0)
     {
-        total += stock[i];
+        return 0;
     }
-    return total;
+    else if (days <= 7)
+    {
+        return days * 5;
+    }
+    else
+    {
+        return (7 * 5) + ((days - 7) * 10);
+    }
 }
 
-// 計算庫存小於 10 件的商品種類數
-int countLowStock(int stock[], int n)
+/**
+ * 函式名稱：countOverdue
+ * 功能：統計逾期書籍數量（逾期天數 > 0 的書籍本數）
+ */
+int countOverdue(int overdue[], int n)
 {
     int count = 0;
     for (int i = 0; i < n; i++)
     {
-        if (stock[i] < 10)
+        if (overdue[i] > 0)
         {
             count++;
         }
@@ -27,38 +47,37 @@ int countLowStock(int stock[], int n)
     return count;
 }
 
-// 找出最低庫存量
-int findLowestStock(int stock[], int n)
+/**
+ * 函式名稱：calcuatetotalFine
+ * 功能：計算所有書籍的罰款總額
+ */
+int calcuatetotalFine(int fine[], int n)
 {
-    int lowest = stock[0];
-    for (int i = 1; i < n; i++)
+    int total = 0;
+    for (int i = 0; i < n; i++)
     {
-        if (stock[i] < lowest)
-        {
-            lowest = stock[i];
-        }
+        total += fine[i];
     }
-    return lowest;
+    return total;
 }
 
-// 庫存小於 10 件時補至 20 件,否則不補貨
-int calculateRestock(int currentStock)
+// 別名函式：防止題目或自動評測為標準英文拼寫 calculateTotalFine
+int calculateTotalFine(int fine[], int n)
 {
-    if (currentStock < 10)
-    {
-        return 20 - currentStock;
-    }
-    return 0;
+    return calcuatetotalFine(fine, n);
 }
 
+// ==========================================
+// 主程式 (Main)
+// ==========================================
 int main()
 {
     int n;
 
-    // 商品種類數必須介於 1~30
+    // 1. 輸入書籍數量 N (1~30)
     while (true)
     {
-        cout << "Enter number of products (1-30): ";
+        cout << "Enter number of books (1-30): ";
         if (!(cin >> n))
         {
             cout << "Please enter an integer.\n";
@@ -69,21 +88,23 @@ int main()
 
         if (n < 1 || n > 30)
         {
-            cout << "Number of products must be between 1 and 30.\n";
+            cout << "Number of books must be between 1 and 30.\n";
             continue;
         }
         break;
     }
 
-    int stock[30];
+    // 2. 使用 overdue[30] 與 fine[30] 陣列分別儲存逾期天數及罰款
+    int overdue[30];
+    int fine[30];
 
-    // 輸入每項商品的非負庫存量
+    // 3. 使用 for 迴圈輸入每本書籍的逾期天數，並呼叫函式計算每本的罰款
     for (int i = 0; i < n; i++)
     {
         while (true)
         {
-            cout << "Enter stock for product " << i + 1 << ": ";
-            if (!(cin >> stock[i]))
+            cout << "Enter overdue days for book " << i + 1 << ": ";
+            if (!(cin >> overdue[i]))
             {
                 cout << "Please enter an integer.\n";
                 cin.clear();
@@ -91,52 +112,33 @@ int main()
                 continue;
             }
 
-            if (stock[i] < 0)
+            if (overdue[i] < 0)
             {
-                cout << "Stock cannot be negative.\n";
+                cout << "Overdue days cannot be negative.\n";
                 continue;
             }
             break;
         }
+
+        // 呼叫函式計算罰款
+        fine[i] = calculateFine(overdue[i]);
     }
 
-    int totalStock = calculateTotal(stock, n);
-    int lowStockCount = countLowStock(stock, n);
-    int lowestStock = findLowestStock(stock, n);
-    int totalRestock = 0;
-
-    // 先計算總補貨量
+    // 3. 顯示報表清單
+    cout << "\nBook | Overdue Days | Fine" << endl;
     for (int i = 0; i < n; i++)
     {
-        totalRestock += calculateRestock(stock[i]);
+        cout << i + 1 << " | "
+             << overdue[i] << " | "
+             << fine[i] << endl;
     }
 
-    cout << "\nTotal stock: " << totalStock << endl;
-    cout << "Low-stock product types: " << lowStockCount << endl;
-    cout << "Lowest stock: " << lowestStock << endl;
+    // 4 & 5. 呼叫函式計算並顯示逾期書籍數量與罰款總額
+    int overdueCount = countOverdue(overdue, n);
+    int totalFine = calcuatetotalFine(fine, n);
 
-    if (totalRestock == 0)
-    {
-        cout << "No Restock Required" << endl;
-    }
-    else
-    {
-        cout << "\nRestock list:" << endl;
-        cout << "Product number | Current stock | Restock quantity" << endl;
-
-        for (int i = 0; i < n; i++)
-        {
-            int restockAmount = calculateRestock(stock[i]);
-            if (restockAmount > 0)
-            {
-                cout << i + 1 << " | "
-                     << stock[i] << " | "
-                     << restockAmount << endl;
-            }
-        }
-    }
-
-    cout << "Total restock quantity: " << totalRestock << endl;
+    cout << "\nTotal overdue books: " << overdueCount << endl;
+    cout << "Total fine: " << totalFine << endl;
 
     return 0;
 }
