@@ -2,6 +2,7 @@
 #include <iomanip>
 
 using namespace std;
+
 double calculateAverage(int times[], int n)
 {
     int sum = 0;
@@ -109,6 +110,7 @@ int main()
     int fastestTime = findFastest(times, n);
     int qualifiedCount = countQualified(times, n);
 
+    // 原題目規則：若有多位並列，只取最先輸入的選手 (找到第一個就 break)
     int fastestRunner = 1;
     for (int i = 0; i < n; i++)
     {
@@ -131,7 +133,8 @@ int main()
     cout << "======Marathon======" << endl;
     for (int i = 0; i < n; i++)
     {
-        cout <<"Runner "<< i + 1 << " :"<< times[i] << " sec, ";showAward(times[i]);
+        cout << "Runner " << i + 1 << " :" << times[i] << " sec, ";
+        showAward(times[i]);
         cout << endl;
     }
     cout << endl;
@@ -143,4 +146,3 @@ int main()
 
     return 0;
 }
-
