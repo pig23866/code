@@ -110,7 +110,6 @@ int main()
     int fastestTime = findFastest(times, n);
     int qualifiedCount = countQualified(times, n);
 
-    // 原題目規則：若有多位並列，只取最先輸入的選手 (找到第一個就 break)
     int fastestRunner = 1;
     for (int i = 0; i < n; i++)
     {
